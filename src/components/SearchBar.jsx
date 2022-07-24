@@ -46,7 +46,7 @@ const SearchBar = ({ items, onItemSelected }) => {
         query={query}
         onResultsCalculated={handleResults}
       />
-      {results > 0 && (
+      {results && (
         <SearchBarContainer>{results.length} results</SearchBarContainer>
       )}
     </SearchBarContainer>
