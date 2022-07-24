@@ -1,6 +1,34 @@
 import React, { useState } from "react";
 import SearchBar from "./components/SearchBar";
 
+import styled from "styled-components";
+
+const Button = styled.button`
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  border: solid 2px #ccc;
+  cursor: pointer;
+  width: 80px;
+  &:hover {
+    background-color: #efefef;
+  }
+  .activated{
+    background-color: #00366
+    color: white;
+    border: solid 2px #26aeff;
+  }
+`;
+
+const AppContainer = styled.div`
+  margin: 30px auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const people = [
   { id: "people-01", title: "John Perez" },
   { id: "people-02", title: "Sergio Gonzalez" },
@@ -29,7 +57,6 @@ function App() {
   const [data, setData] = useState([...people, ...calendar, ...emails]);
   const [selection, setSelection] = useState(null);
   const [currentOption, setCurrentOption] = useState("all");
-  const [count, setCount] = useState(0);
 
   const handleClick = (e) => {
     const option = e.target.name;
@@ -59,24 +86,30 @@ function App() {
     }
   };
 
+  const handleItemSelected = (item) => {
+    setSelection(item);
+  };
+
   return (
     <div>
-      <button onClick={handleClick} name="all">
-        All
-      </button>
-      <button onClick={handleClick} name="people">
-        People
-      </button>
-      <button onClick={handleClick} name="calendar">
-        Calendar
-      </button>
-      <button onClick={handleClick} name="emails">
-        Emails
-      </button>
-
-      <button onClick={() => setCount(count + 1)}>{count}</button>
-
-      <SearchBar items={data} onItemSelected={() => {}} />
+      <AppContainer>
+        <Button onClick={handleClick} name="all">
+          All
+        </Button>
+        <Button onClick={handleClick} name="people">
+          People
+        </Button>
+        <Button onClick={handleClick} name="calendar">
+          Calendar
+        </Button>
+        <Button onClick={handleClick} name="emails">
+          Emails
+        </Button>
+      </AppContainer>
+      <AppContainer>
+        {selection ? <div>You selected: {selection.title}</div> : ""}
+      </AppContainer>
+      <SearchBar items={data} onItemSelected={handleItemSelected} />
     </div>
   );
 }
