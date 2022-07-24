@@ -10,14 +10,21 @@ const SearchBar = ({ items, onItemSelected }) => {
     setQuery(value);
   };
 
+  const handleResults = (items) => {
+    setResults(items);
+  };
+
+  const handleItemSelected = () => {};
+
   return (
     <div>
       <input type="text" onChange={handleChange} value={query} />
+      {results && <div>{results.length} results</div>}
       <Results
         items={items}
-        onItemSelected={() => {}}
+        onItemSelected={handleItemSelected}
         query={query}
-        onResultsCalculated={() => {}}
+        onResultsCalculated={handleResults}
       />
     </div>
   );

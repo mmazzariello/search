@@ -1,8 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import MarkedItem from "./MarkedItem";
 
 const Results = ({ items, onItemSelected, query, onResultsCalculated }) => {
   const [results, setResults] = useState([]);
   const filteredItems = useMemo(() => findMatch(items, query), [items, query]);
+
+  useEffect(() => {
+    onResultsCalculated(results);
+  }, [results]);
 
   function findMatch(items, query) {
     const res = items.filter(
@@ -11,10 +16,18 @@ const Results = ({ items, onItemSelected, query, onResultsCalculated }) => {
     setResults(res);
     return res;
   }
+
   return (
     <div>
       {query !== ""
-        ? filteredItems.map((item) => <div key={item.id}>{item.title}</div>)
+        ? filteredItems.map((item) => (
+            <MarkedItem
+              key={item.id}
+              item={item}
+              query={query}
+              onClick={onItemSelected}
+            />
+          ))
         : ""}
     </div>
   );
